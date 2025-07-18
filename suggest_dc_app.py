@@ -266,7 +266,7 @@ if show_store_markers:
 
         
         # Suggested hub layer
-        suggest_layer = FeatureGroup(name="Suggested New Hubs")
+    suggest_layer = FeatureGroup(name="Suggested New Hubs")
         
         for i, (lat, lon) in enumerate(new_hub_locations):
             point = Point(lon, lat)
