@@ -195,10 +195,12 @@ if not cluster_data.empty:
     # Layer visibility controls
     with st.expander("🧭 Layer Visibility Controls"):
         show_heatmap = st.checkbox("Show Heatmap", value=True)
-        show_customer_markers = st.checkbox("Show Customer Markers", value=True)
+        show_customer_markers = st.checkbox("Show Customer Markers (Outside Hub)", value=True)
+        show_store_markers = st.checkbox("Show Store Markers (Within Radius)", value=True)
         show_existing_hubs = st.checkbox("Show Existing Hubs", value=True)
         show_suggested_hubs = st.checkbox("Show Suggested Hubs", value=True)
         show_hub_radius_layer = st.checkbox("Show Existing Hub Radius Zones", value=True)
+
 
     #------------------------------------------------------------------------------------------------------------------------
     
@@ -243,6 +245,26 @@ if not cluster_data.empty:
         if show_customer_markers:
             outside_layer.add_to(m_new)
 
+        # ----------------- Store markers within radius -----------------
+store_gdf = combined_gdf[combined_gdf['Source'] == 'Store'].copy()
+inside_stores = store_gdf[store_gdf['Outside_Hub'] == False]
+
+store_layer = FeatureGroup(name="Stores in Radius")
+for _, row in inside_stores.iterrows():
+    color = 'green' if row.get('Type', '').lower() == 'makro' else 'purple'
+    folium.CircleMarker(
+        location=[row['Lat'], row['Long']],
+        radius=5,
+        color=color,
+        fill=True,
+        fill_opacity=0.6,
+        popup=row['Code']
+    ).add_to(store_layer)
+
+if show_store_markers:
+    store_layer.add_to(m_new)
+
+        
         # Suggested hub layer
         suggest_layer = FeatureGroup(name="Suggested New Hubs")
         
