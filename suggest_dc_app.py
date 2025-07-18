@@ -265,10 +265,10 @@ if show_store_markers:
     store_layer.add_to(m_new)
 
         
-        # Suggested hub layer
+    # Suggested hub layer
     suggest_layer = FeatureGroup(name="Suggested New Hubs")
         
-        for i, (lat, lon) in enumerate(new_hub_locations):
+    for i, (lat, lon) in enumerate(new_hub_locations):
             point = Point(lon, lat)
         
             # หา province name
