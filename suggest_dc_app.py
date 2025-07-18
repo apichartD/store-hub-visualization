@@ -297,7 +297,7 @@ if show_store_markers:
         
         # ✅ อย่าลืม add layer ถ้าเปิดให้แสดง
     if show_suggested_hubs:
-    suggest_layer.add_to(m_new)
+        suggest_layer.add_to(m_new)
     
         # Combined heatmap
         if show_heatmap:
